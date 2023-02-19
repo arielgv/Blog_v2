@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils import timezone
+from django.http import JsonResponse
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from blog.models import Post
 from blog.forms import PostForm
-from rest_framework import generics
+from rest_framework import generics, status
+from django.views.decorators.csrf import csrf_exempt
 from .models import Profile
 from .serializers import ProfileSerializer
 
@@ -51,3 +54,20 @@ def create_post(request):
     else:
         form = PostForm()
     return render(request, 'blog/create_post.html', {'form': form})
+
+# this is for Unity test: Users list
+
+@csrf_exempt
+def user_posts(request, user_id):
+    #vista basada en función que devuelve una lista de todos 
+    # los posts de un usuario, su URL es /api/posts/<int:user_id>/
+    if request.method == 'GET':
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        posts = user.posts.all()
+        response_data = {'posts': list(posts.values())}
+        return JsonResponse(response_data, status=status.HTTP_200_OK)
+        
