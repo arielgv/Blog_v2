@@ -3,10 +3,19 @@ from django.contrib import messages
 from django.utils import timezone
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic.edit import UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from blog.models import Post
 from blog.forms import PostForm
+from rest_framework import generics
+from .models import Profile
+from .serializers import ProfileSerializer
+
+
+#la clase ProfileList hereda de generics.ListCreateAPIView. 
+# Esto proporciona una lista paginada de todos los perfiles 
+# y permite la creación de nuevos perfiles a través del método HTTP POST.
+class ProfileList(generics.ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 def register(request):
