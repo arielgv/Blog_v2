@@ -8,7 +8,7 @@ from django.views.generic import DeleteView
 
 def home(request):
     context = {
-        'posts' : Post.objects.all()
+        'posts' : Post.objects.all().order_by('-updated_at')
     }
     return render(request, 'blog/home.html', context)
 
