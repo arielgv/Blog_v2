@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils import timezone
 from django.urls import reverse_lazy
 from .models import Post
 from django.views.generic.edit import UpdateView
@@ -16,7 +17,7 @@ def about(request):
 
 
 
-####
+
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
@@ -28,6 +29,10 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == post.author:
             return True
         return False
+    
+    def form_valid(self, form):
+        form.instance.updated_at = timezone.now()
+        return super().form_valid(form)
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post

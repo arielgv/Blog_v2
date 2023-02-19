@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils import timezone
 from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from blog.models import Post
+from blog.forms import PostForm
 
 
 def register(request):
@@ -21,30 +23,22 @@ def register(request):
 
 @login_required
 def profile(request):
-    context = {
-        'posts' : Post.objects.all()
-    }
-    return render(request, 'users/profile.html',context)
-"""
+    if request.method=="GET":
+        context = {
+            'posts' : Post.objects.all()
+        }
+        return render(request, 'users/profile.html',context)
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Post
-    fields = ['title', 'content']
-    #template_name = '__update_form'
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
-
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Post
-    success_url = '/'
-
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
-            return True
-        return False
-"""
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.date_posted = timezone.now()
+            post.save()
+            return redirect('profile')
+    else:
+        form = PostForm()
+    return render(request, 'blog/create_post.html', {'form': form})

@@ -6,6 +6,9 @@
           <div class="article-metadata">
             <a class="mr-2">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_posted | date:"d F, Y" }}</small>
+            {% if post.updated_at %}
+            <small class="text-muted">Actualizado en {{ post.updated_at | date:"d F, Y" }}</small>
+            {% endif %}
           </div>
           <h2><span style="color: #00BFFF">{{ post.title }}</span></h2>
           <p class="article-content">{{ post.content }}</p>
