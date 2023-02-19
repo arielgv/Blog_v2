@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from django.db.models import Q
 from django.utils import timezone
 from django.urls import reverse_lazy
 from .models import Post
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, ListView
+from django.views.generic.detail import DetailView
 
 def home(request):
     context = {
@@ -43,3 +45,26 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False
+
+class SearchResultsView(ListView):
+    model = Post
+    template_name = 'blog/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
+        return object_list
+    
+class PostDetailView(DetailView):
+    model = Post
+
+
+class UserPostsView(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        return Post.objects.filter(author=self.request.user).order_by('-date_posted')

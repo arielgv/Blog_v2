@@ -72,7 +72,10 @@
                   <a href="{% url 'create_post' %}" class="btn btn-success mb-2">CREATE A POST</a>
               {% endif %}</li>
                 <li class="list-group-item list-group-item-light">Filter</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
+                <li class="list-group-item list-group-item-light"><form action="{% url 'search_results' %}" method="get">
+                  <input type="text" name="q" placeholder="Buscar...">
+                  <button type="submit">Buscar</button>
+                </form></li>
                 <li class="list-group-item list-group-item-light">This page is already under construction . 19/02/23</li>
               </ul>
             </p>
