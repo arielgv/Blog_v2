@@ -31,18 +31,29 @@ dirigirse a la carpeta
 Instalar los contenedores. Requiere tener Docker corriendo:
 
 ```bash
-  docker-compose run web python3 manage.py makemigrations
+  docker-compose up -d --build
 ``` 
-Este comando hará que comience a instalar todas las dependencias, al finalizar, se debe de migrar todos los datos a PostgreSql, utilizando el siguiente comando:
+Este comando hará que comience a instalar todas las dependencias, al finalizar, se debe de migrar todos los datos a PostgreSql
+
+Ejecutar comandos dentro de Docker es un poco diferente a un proyecto Django tradicional, por ejemplo, ahora para realizar la migración de datos debemos ejecutar el siguiente comando:
 
 ```bash
-  docker-compose run web python3 manage.py migrate 
+  docker-compose exec web python manage.py migrate 
 ```
 Al finalizar la migración de datos, ya está todo listo para correr el servidor
 ```bash
     docker-compose run web python3 manage.py runserver
 ```
+
 Con esto comenzará a funcionar el servidor de Django utilizando de motor a PostgreSql que ya se encontrará corriendo como una imagen del contenedor.
+
+
+
+(Alternativamente) Si uno desea crear un superuser para administración , solamente siguiendo la misma lógica de los comandos , debería ser así:
+"docker-compose exec web python manage.py createsuperuser" (sin comillas)
+
+
+- Es importante que cuando se finalice de utilizar la página , en la consola de comandos presionar Ctrl + Z para salir nuevamente al bash y ejecutar "docker-compose down". para detener los contenedores.
 
 
 ## Ingresar al blog
