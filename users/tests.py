@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase, APIClient
 from rest_framework.views import status
 
-from .models import Post
+from blog.models import Post
 
 class UserPostsTestCase(APITestCase):
+    #Este test case es particular de DRF , APITestCase en este caso genera dos usuarios distintos y 
+    #testea cada uno en distintos casos para generar Posteos.
     client = APIClient()
 
     def setUp(self):
@@ -20,6 +22,7 @@ class UserPostsTestCase(APITestCase):
         self.post3 = Post.objects.create(user=self.user2, title='Test post 3', content='Test post 3 content')
 
     def test_get_user_posts(self):
+        
         url = reverse('user-posts', kwargs={'user_id': self.user1.id})
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
