@@ -2,10 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Profile(models.Model):
-    # Esta clase aún no esta bien desarrollada porque ya implica el uso de una imagen como archivo estatico y 
-    # ya que el proposito de este proyecto no es acerca de detalles de disenos finos, se omitio lograr bien 
-    # la clase Perfil que incluiria una imagen individual con cada usuario.
-    # una version mas completa abarcaria la posibilidad de subir y tener una propia pagina de perfil de usuario mas detallada
+    # This class is not yet well developed because it already involves the use of an image as a static file and
+    # since the purpose of this project is not about fine design details, it omitted to get it right
+    # the Profile class that would include an individual image with each user.
+    # a more complete version would include the possibility of uploading and having its own more detailed user profile page
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 

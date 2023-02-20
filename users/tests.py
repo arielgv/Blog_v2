@@ -8,8 +8,8 @@ from rest_framework.views import status
 from blog.models import Post
 
 class UserPostsTestCase(APITestCase):
-    #Este test case es particular de DRF , APITestCase en este caso genera dos usuarios distintos y 
-    #testea cada uno en distintos casos para generar Posteos.
+    # This test case is particular to DRF , APITestCase in this case generates two different users and
+    # test each one in different cases to generate Posts.
     client = APIClient()
 
     def setUp(self):

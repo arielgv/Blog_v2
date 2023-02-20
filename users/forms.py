@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class UserRegisterForm(UserCreationForm):
-    #Esta clase hereda de UserCreationForm, el cual de una manera muy sencilla elabora y presenta un 
-    #formulario de registro de usuario, con seteos de seguridad para passwords.
+    # This class inherits from UserCreationForm, which in a very simple way creates and presents a
+    # User registration form, with security settings for passwords.
     email = forms.EmailField()
     class Meta:
         model = User

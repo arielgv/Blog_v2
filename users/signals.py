@@ -5,11 +5,10 @@ from .models import Profile
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    #las señales permiten que 
-    #ciertos “emisores” notifiquen a un conjunto de “receptores” que 
-    #se ha producido alguna acción. Son especialmente útiles cuando muchos 
-    #fragmentos de código pueden estar interesados ​​en los mismos eventos.
-
-    #Este modulo no es indispensable para el proyecto y esta inconcluso.
+    # signals allow
+    # certain “senders” notify a set of “receivers” that
+    # some action has occurred. They are especially useful when many
+    # code snippets may be interested in the same events.
+    # This module is not essential for the project and is unfinished.
     if created:
         Profile.objects.create(user=instance)

@@ -13,9 +13,9 @@ from .models import Profile
 from .serializers import ProfileSerializer
 
 
-#la clase ProfileList hereda de generics.ListCreateAPIView. 
-# Esto proporciona una lista paginada de todos los perfiles 
-# y permite la creación de nuevos perfiles a través del método HTTP POST.
+# The ProfileList class inherits from generics.ListCreateAPIView.
+# This provides a paginated list of all profiles
+# and allows the creation of new profiles via the HTTP POST method.
 class ProfileList(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -59,8 +59,8 @@ def create_post(request):
 
 @csrf_exempt
 def user_posts(request, user_id):
-    #vista basada en función que devuelve una lista de todos 
-    # los posts de un usuario, su URL es /api/posts/<int:user_id>/
+    # view based on function returning a list of all
+    # a user's posts, their URL is /api/posts/<int:user_id>/
     if request.method == 'GET':
         try:
             user = User.objects.get(id=user_id)

@@ -2,7 +2,7 @@
 # Blog with Django
 
 
-Este proyecto fue desarrollado para cumplir con determinadas consignas y pensado para mostrar algunas propiedades del desarrollo Rest con Django. Su estructura visual no está pulida del todo pero en general cumplimenta con su objetivo el cual pasa mas por el lado del Backend.
+This project was developed to comply with certain guidelines and intended to show some properties of Rest development with Django. Its visual structure is not polished at all but in general it fulfills its objective, which goes more through the Backend side.
 
 
 
@@ -13,72 +13,74 @@ Este proyecto fue desarrollado para cumplir con determinadas consignas y pensado
 
 ## INSTALACION
 
-REQUIERE TENER DOCKER DESCARGADO EN SU SISTEMA.
+IT REQUIRES TO HAVE DOCKER DOWNLOADED ON YOUR SYSTEM. 
 
 
-Clonar el repositorio, o bien descargar como un zip 
+Clone the repository, or download as a zip
 
 ```bash
   git clone https://github.com/arielgv/Blog_with_dj.git
 ```
 
-dirigirse a la carpeta
+go to the folder
 
 ```bash
-  cd [proyecto_decargado]
+  cd [downloaded_project]
 ```
 
-Instalar los contenedores. Requiere tener Docker corriendo:
+Install the containers. Requires having Docker running:
 
 ```bash
   docker-compose up -d --build
 ``` 
-Este comando hará que comience a instalar todas las dependencias, al finalizar, se debe de migrar todos los datos a PostgreSql
+This command will start installing all dependencies, when finished, all data must be migrated to PostgreSql
 
-Ejecutar comandos dentro de Docker es un poco diferente a un proyecto Django tradicional, por ejemplo, ahora para realizar la migración de datos debemos ejecutar el siguiente comando:
+Running commands inside Docker is a bit different than a traditional Django project, for example, now to perform the data migration we need to run the following command:
 
 ```bash
   docker-compose exec web python manage.py migrate 
 ```
-Al finalizar la migración de datos, ya está todo listo para correr el servidor
+At the end of the data migration, everything is ready to run the server
 ```bash
-    docker-compose run web python3 manage.py runserver
+    docker-compose run web python manage.py runserver
 ```
 
-Con esto comenzará a funcionar el servidor de Django utilizando de motor a PostgreSql que ya se encontrará corriendo como una imagen del contenedor.
+Now, the Django server will start working using the PostgreSql engine, which will already be running as a container image.
 
 
 
-(Alternativamente) Si uno desea crear un superuser para administración , solamente siguiendo la misma lógica de los comandos , debería ser así:
-"docker-compose exec web python manage.py createsuperuser" (sin comillas)
+(Alternatively) If you want to create a superuser for administration, just following the same logic of the commands, it should be like this:
+"docker-compose exec web python manage.py createsuperuser" (without quotes)
 
 
-- Es importante que cuando se finalice de utilizar la página , en la consola de comandos presionar Ctrl + Z para salir nuevamente al bash y ejecutar "docker-compose down". para detener los contenedores.
+- It is important that when you finish using the page, in the command console press Ctrl + Z to exit back to bash and execute "docker-compose down". to stop the containers.
 
 
-## Ingresar al blog
+## Enter the blog
 
-Para acceder al programa se debe abrir una ventana del explorador web e ingresar a la direccion http://localhost:8000
+To access the program, you must open a web browser window and enter the address http://localhost:8000
 
 ## Funcionamiento del Blog :
 
-Al ingresar al blog estará una pagina de inicio en blanco, dirigase al sector superior de la pagina y al hacer click en Register se dirigirá hacia un formulario de registro de usuario 
+When entering the blog there will be a blank home page, go to the upper sector of the page and by clicking on Register you will be redirected to a user registration form.
+
 ## Screenshots
 
 ![App Screenshot](https://i.imgur.com/Kuujhju.png)
 
-Luego de registrarse y logearse en el sistema, ya estará habilitado para crear sus propios posts !
+After registering and logging into the system, you will be now ready to create your own posts!
 
-Multiples usuario pueden crear cuentas y logearse !  No se preocupe por la complejidad del sistema, todo lo desarrolla Django detrás ! junto con la agilidad y las ventajas de un gran motor como lo es Postgresql el cual está corriendo tambien gracias a los contenedores de Docker que automatizaron toda la configuración !
+Multiple users can create accounts and login! Don't worry about the complexity of the system, everything is developed by Django behind the scenes! together with the agility and the advantages of a great engine such as Postgresql which is also running in Docker containers with all the automated configuration!
 
-![App Screenshot](https://i.imgur.com/CZkfUzt.png)
+![App Screenshot](https://i.imgur.com/hsVZrSM.png)
 
-Los usuarios que crearon sus posts tienen acceso para editarlos o eliminarlos siempre y cuando sean los autores validados del Post !
+The users who created their posts have access to edit or delete them as long as they are the validated authors of the Post! When trying to delete a post a confirmation window will appear to validate it.
+The database automates a volume so that each time the container is closed, the information entered into the database is not lost. and then when you run the container again your information is still there!
 
 
 ![App Screenshot](https://i.imgur.com/wYQYqII.png)
 
-Tambien está a su alcance una simple pero poderosa herramienta de búsqueda y filtrado de los posts, ayudada por módulos de Django, Con solo ingresar una cadena de lo que está buscando, el buscador arrojará resultados si es que lo encuentra !
+A simple but powerful post search and filter tool is also at your fingertips, aided by Django modules. Just enter a string of what you're looking for, and the search engine will return results if it finds it!
 
 
 ## API Reference
@@ -91,7 +93,7 @@ Tambien está a su alcance una simple pero poderosa herramienta de búsqueda y f
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `queryset` | recibe todos los posts |
+| `api_key` | `queryset` | returns all posts |
 
 #### POST post
 
@@ -101,10 +103,10 @@ Tambien está a su alcance una simple pero poderosa herramienta de búsqueda y f
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `title`      | `string` | **Required**. titulo |
-| `content` | `string` | **R** contenido del post |
-| `date_posted ` | `date` | **R** TimeStamp del posteo |
-| `id_author` | `Int_FK` | **R** numero de index del autor |
+| `title`      | `string` | **Required**. post's title |
+| `content` | `string` | **R** post's content|
+| `date_posted ` | `date` | **R** post's TimeStamp   |
+| `id_author` | `Int_FK` | **R** author's index number|
 
 
 ```http
@@ -113,7 +115,7 @@ Tambien está a su alcance una simple pero poderosa herramienta de búsqueda y f
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required** devuelve informacion del usuario 
+| `id`      | `int` | **Required** returns user info (only auth) 
 
 ```http
   GET api/posts/<int:user_id>/
@@ -121,30 +123,30 @@ Tambien está a su alcance una simple pero poderosa herramienta de búsqueda y f
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Required** devuelve los post del usuario referido
+| `id`      | `int` | **Required** returns the user's posts
 
 
 ## Running Tests
 
-Para correr los test unitarios de cada Endpoint ejecutar el siguiente comando:
+To run the unit tests of each endpoint, execute the following command:
 
 ```bash
   python3 manage.py tests
 ```
 
 
-## REALIZACION Y EXPLICACION TECNICA DEL CODIGO.
+## TECHNICAL REALIZATION AND EXPLANATION OF THE CODE.
 
-El programa fue realizado empleando imagen de Python 3.10 en la cual se instalaron multiples dependencias entre las que que se encuentran Django 4.1, Django Rest Framework y psycopg2 (postgresql) entre otras. 
+The program was made using a Python 3.10 image in which multiple dependencies were installed, among which are Django 4.1, Django Rest Framework and psycopg2 (postgresql) among others.
  
- Primero se desarrollaron las apps (users & posts) que formarían parte del proyecto, se hace su correspondiente declaración en settings junto con la configuracion de base de datos. Luego los modelos necesarios para que funcione la página , que fueron los modelos de usuario y de posts. 
-  Luego de realizar la correspondiente serialización de cada uno, se comenzaron a implementar las propiedades correspondientes de cada item. La clase usuario recibió herencia de User de Django Contrib Auth , el cual ya posee una excelente configuración para validaciones y un conjunto de propiedades que lo hacen bastante seguro y facil de someter a distintos Tests. Lo mismo ocurriría con post para recibir una petición antes tendría que someter al peticionista una autenticación para poder validar. 
+First, the apps (users & posts) that would be part of the project were developed, their corresponding declaration is made in settings along with the database configuration. Then the models necessary for the page to work, which were the user and post models.
+After carrying out the corresponding serialization of each one, the corresponding properties of each item began to be implemented. The user class inherited from User from Django Contrib Auth , which already has an excellent configuration for validations and a set of properties that make it quite secure and easy to submit to different tests. The same would happen with post to receive a request before it would have to submit an authentication to the requester to be able to validate.
 
-  Luego se procedió a realizar las Views, donde se validaría las peticiones, respuestas, request, etcetera. Cada uno cuidadosamente documentado en el codigo y con su debida respuesta HTTP en Status en cada escenario que corresponda. Luego relacionado con su correspondiente Url en el modulo de urls.py
+Then we proceeded to carry out the Views, where the requests, responses, requests, etc. would be validated. Each one carefully documented in the code and with its proper HTTP response in Status in each corresponding scenario. Then related to its corresponding Url in the urls.py module
 
-  Por ultimo antes de pasar a la parte de desarrollo visual en templates, se realizaron los correspondientes test unitarios de cada app, por un lado la clase Post revisando cuidadosamente distintos escenarios y ejecutando diversos test facilitados por clases de Django, como así tambien en la clase Users, el cual creaba multiples usuario automaticamente para diversas pruebas. 
+Finally, before moving on to the visual development part in templates, the corresponding unit tests of each app were carried out, on the one hand, the Post class, carefully reviewing different scenarios and executing various tests provided by Django classes, as well as in the class Users, which created multiple users automatically for various tests.
 
-  Al finalizar se confeccionaron los templates en donde predominaba un bloque principal de post en donde se optó por un formato clasico donde se mostraban los post en orden descendente segun su fecha de publicación .  Cada Usuario tiene acceso a sus propios posts con derechos individuales de modificacion o eliminacion.
+At the end, the templates were made where a main block of posts predominated, where a classic format was chosen where the posts were displayed in descending order according to their publication date. Each User has access to their own posts with individual rights to modify or delete.
 
   
   

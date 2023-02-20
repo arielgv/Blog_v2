@@ -13,21 +13,21 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 def home(request):
-    #Esta es la main view, recibe todos los post publicados por todos los usuarios, en orden desde el mas reciente
-    #al más antiguo debajo. De ser actualizado (editado) el post, se prioriza la fecha Updated.
+    #This is the main view, it receives all posts published by all users, in order from the most recent
+    #to oldest below. If the post is updated (edited), the Updated date is prioritized.
     context = {
         'posts' : Post.objects.all().order_by('-updated_at')
     }
     return render(request, 'blog/home.html', context)
 
 def about(request):
-    #Esta es una vista aún vacía, devuelve un html vacío.
+    #This is still an empty view, it returns empty html.
     return render(request, 'blog/about.html', {'title':'About'})
 
 class PostAPIView(APIView):
-    #Esta vista de API maneja solicitudes del tipo POST para el modelo declarado. El metodo valida y 
-    #deserializa los datos de la solicitud. Si la validacion tiene exito, se guarda el objeto.
-    #En cualquier caso se devuelve una respuesta HTTP
+    #This API view handles POST requests to the declared model. The method validates and
+    #deserialize the request data. If the validation succeeds, the object is saved.
+    #In either case an HTTP response is returned
     def post(self, request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
@@ -39,16 +39,16 @@ class PostAPIView(APIView):
 
 
 class PostList(generics.ListCreateAPIView):
-    # se crea una vista de lista para los objetos de Post que utiliza el Serializer
-    # de Post. También se define el queryset para obtener
-    # todos los objetos de Post.    
+    # create a list view for the Post objects used by the Serializer
+    # of Post. Also define the queryset to get
+    # all Post objects.   
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    #Esta clase realiza comprobaciones de Login y acredita al usuario antes de permitirle
-    #realizar cualquier cambio a un post
+    # This class performs login checks and accredits the user before allowing them
+    # make any changes to a post
     model = Post
     fields = ['title', 'content']
     template_name_suffix = '_update_form'
@@ -65,8 +65,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    #Al igual que el módulo update , realiza distintas comprobaciones y validaciones
-    #antes de permitirle al usuario poder Borrar el post.
+    #Like the update module, performs various checks and validations
+    #before allowing the user to Delete the post.
     model = Post
     success_url = reverse_lazy('profile')
 
@@ -77,8 +77,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 class SearchResultsView(ListView):
-    #Esta clase devuelve el listado de búsqueda que se haya realizado en el recuadro de búsqueda que 
-    #forma parte del frontend de la página.
+    # This class returns the search listing that has been performed in the search box that
+    # is part of the frontend of the page.
     model = Post
     template_name = 'blog/search_results.html'
 
@@ -94,7 +94,7 @@ class PostDetailView(DetailView):
 
 
 class UserPostsView(ListView):
-    #Esta clase responde al recuadro de post particulares de un usuario. Visible desde el endpoint Profile
+    # This class responds to a user's particular post box. Visible from endpoint Profile
     model = Post
     template_name = 'blog/user_posts.html'
     context_object_name = 'posts'

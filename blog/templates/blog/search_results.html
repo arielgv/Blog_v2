@@ -1,7 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-  <h1>Resultados de búsqueda para "{{ request.GET.q }}"</h1>
+  <h1>Search results for "{{ request.GET.q }}"</h1>
 
   {% if object_list %}
     <ul>
@@ -13,6 +13,6 @@
       {% endfor %}
     </ul>
   {% else %}
-    <p>No se encontraron resultados.</p>
+    <p>No results found.</p>
   {% endif %}
 {% endblock %}

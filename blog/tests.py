@@ -4,17 +4,17 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 
 class PostModelTest(TestCase):
-    #se crean tres métodos de prueba:   
-    #test_title_content: este método verifica que el título y el contenido del post creado sean los esperados.
-    #test_post_list_view: este método verifica que la lista de posts se carga correctamente,
-    #el status code es 200, y se encuentra la cadena 'Test content' en la respuesta, 
-    #además de que el template utilizado es 'blog/post_list.html'.
-    #test_post_detail_view: este método verifica que la vista de detalle de un post se carga correctamente,
-    #el status code es 200, y se encuentra la cadena 'Test Post' en la respuesta, además de 
-    #que el template utilizado es 'blog/post_detail.html'. También se verifica que se obtiene 
-    #un error 404 cuando se intenta acceder a un post inexistente.    
-    #Cada método de prueba se ejecutará automáticamente cuando se ejecute la prueba. 
-    #se puede ejecutar la prueba mediante el comando python manage.py test.
+    # three test methods are created:
+    #test_title_content: This method verifies that the title and content of the created post are as expected.
+    #test_post_list_view: this method verifies that the list of posts is loaded correctly,
+    #the status code is 200, and the string 'Test content' is found in the response,
+    #besides that the template used is 'blog/post_list.html'.
+    #test_post_detail_view: This method verifies that the detail view of a post is loaded correctly,
+    #the status code is 200, and the string 'Test Post' is found in the response, plus
+    #that the template used is 'blog/post_detail.html'. It is also verified that one obtains
+    #a 404 error when trying to access a non-existent post.
+    #Each test method will be executed automatically when the test is executed.
+    #the test can be run using the python manage.py test command.
 
     @classmethod
     def setUpTestData(cls):
