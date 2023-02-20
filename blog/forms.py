@@ -2,6 +2,8 @@ from django import forms
 from .models import Post
 
 class PostForm(forms.ModelForm):
+    #Esta clase hereda de ModelForm, el cual mediante pocas líneas puede generar un formulario
+    #según el objetivo que se desee, como el de este caso para ingresar un nuevo Post en la tabla
     class Meta:
         model = Post
         fields = ['title', 'content']

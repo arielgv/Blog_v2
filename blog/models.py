@@ -2,7 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-# Create your models here.
+# Aqui creamos los modelos que luego migran como base de datos hacia postgresql,
+# siempre ante cada modificacion, se realiza el comando makemigrations para actualizar las tablas correspondientes
 class Post(models.Model):
     title = models.CharField(max_length = 100)
     content = models.TextField()

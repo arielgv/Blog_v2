@@ -13,12 +13,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 def home(request):
+    #Esta es la main view, recibe todos los post publicados por todos los usuarios, en orden desde el mas reciente
+    #al más antiguo debajo. De ser actualizado (editado) el post, se prioriza la fecha Updated.
     context = {
         'posts' : Post.objects.all().order_by('-updated_at')
     }
     return render(request, 'blog/home.html', context)
 
 def about(request):
+    #Esta es una vista aún vacía, devuelve un html vacío.
     return render(request, 'blog/about.html', {'title':'About'})
 
 class PostAPIView(APIView):
@@ -44,6 +47,8 @@ class PostList(generics.ListCreateAPIView):
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    #Esta clase realiza comprobaciones de Login y acredita al usuario antes de permitirle
+    #realizar cualquier cambio a un post
     model = Post
     fields = ['title', 'content']
     template_name_suffix = '_update_form'
@@ -60,6 +65,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return super().form_valid(form)
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    #Al igual que el módulo update , realiza distintas comprobaciones y validaciones
+    #antes de permitirle al usuario poder Borrar el post.
     model = Post
     success_url = reverse_lazy('profile')
 
@@ -70,6 +77,8 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 class SearchResultsView(ListView):
+    #Esta clase devuelve el listado de búsqueda que se haya realizado en el recuadro de búsqueda que 
+    #forma parte del frontend de la página.
     model = Post
     template_name = 'blog/search_results.html'
 
@@ -85,6 +94,7 @@ class PostDetailView(DetailView):
 
 
 class UserPostsView(ListView):
+    #Esta clase responde al recuadro de post particulares de un usuario. Visible desde el endpoint Profile
     model = Post
     template_name = 'blog/user_posts.html'
     context_object_name = 'posts'
