@@ -37,7 +37,7 @@ def register(request):
 def profile(request):
     if request.method=="GET":
         context = {
-            'posts' : Post.objects.all()
+            'posts' : Post.objects.all().order_by('-updated_at')
         }
         return render(request, 'users/profile.html',context)
 

@@ -9,7 +9,7 @@
             <h2 class="card-title">{{ post.title }}</h2>
             <p class="card-text">{{ post.content }}</p>
             <div class="d-flex justify-content-between align-items-center">
-              <small class="text-muted">{{ post.date_posted | date:"d F, Y" }}</small>
+              <small class="text-muted">{{ post.updated_at | date:"d F, Y" }}</small>
               <div class="btn-group">
                 {% if user.is_authenticated and user == post.author %}
                 <a class="btn btn-secondary btn-sm" href="{% url 'post-update' post.id %}">Edit</a>
